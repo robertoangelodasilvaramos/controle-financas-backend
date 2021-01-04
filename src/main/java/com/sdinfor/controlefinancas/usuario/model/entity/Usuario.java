@@ -1,4 +1,4 @@
-package com.sdinfor.controlefinancas.model.entity;
+package com.sdinfor.controlefinancas.usuario.model.entity;
 
 
 import lombok.AllArgsConstructor;

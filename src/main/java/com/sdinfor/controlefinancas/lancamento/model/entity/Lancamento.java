@@ -1,8 +1,9 @@
-package com.sdinfor.controlefinancas.model.entity;
+package com.sdinfor.controlefinancas.lancamento.model.entity;
 
 
-import com.sdinfor.controlefinancas.model.enums.StatusLancamento;
-import com.sdinfor.controlefinancas.model.enums.TipoLancamento;
+import com.sdinfor.controlefinancas.lancamento.model.enums.StatusLancamento;
+import com.sdinfor.controlefinancas.lancamento.model.enums.TipoLancamento;
+import com.sdinfor.controlefinancas.usuario.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
