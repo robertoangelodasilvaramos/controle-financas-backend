@@ -22,7 +22,7 @@ public class UsuarioServiceTest {
     @Autowired
     UsuarioRepository repository;
 
-    @Test(expected = Test.None.class)
+    @Test()
     public void deveValidarEmail(){
         repository.deleteAll();
         service.validarEmail("email@elamil.com");
