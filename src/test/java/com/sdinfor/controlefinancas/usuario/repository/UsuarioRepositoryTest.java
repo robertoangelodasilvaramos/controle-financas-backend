@@ -5,23 +5,31 @@ import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
+
+@DataJpaTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class UsuarioRepositoryTest {
 
     @Autowired
     UsuarioRepository repository;
 
+    @Autowired
+    TestEntityManager entityManager;
+
     @Test
     public void deveVerificarAExistenciaDeUMEmail(){
         //cenário
         var usuario = Usuario.builder().nome("usuario").email("usuario@emaiol.com").senha("123").build();
-        repository.save(usuario);
+        entityManager.persist(usuario);
         //ação - execução
         var result = repository.existsByEmail("usuario@emaiol.com");
         //verificação
@@ -30,7 +38,6 @@ public class UsuarioRepositoryTest {
 
     @Test
     public void deveRetornarFalsoQuandoNaoHouverUsuarioCadastradoComEmail(){
-        repository.deleteAll();
         var result = repository.existsByEmail("usuario@emaiol.com");
         Assertions.assertThat(result).isFalse();
     }
