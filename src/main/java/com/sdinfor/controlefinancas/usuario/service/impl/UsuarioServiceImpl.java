@@ -22,9 +22,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario autenticar(String email, String senha) {
         var usuario = repository.findByEmail(email);
         //testa email
-        if(usuario.isEmpty()) throw new ErroAutenticationException("Usuário não Encontrado para o E-mail informado!");
+        if(usuario.isEmpty()) {
+            throw new ErroAutenticationException("Usuário não Encontrado para o E-mail informado!");
+        }
         //testa senha
-        if (usuario.get().getSenha().equals(senha)) throw new ErroAutenticationException("Senha invalidos!");
+        else if (usuario.get().getSenha().equals(email)){
+            throw new ErroAutenticationException("Senha invalidos!");
+        }
         //retorna usuario logado
         return usuario.get();
     }
