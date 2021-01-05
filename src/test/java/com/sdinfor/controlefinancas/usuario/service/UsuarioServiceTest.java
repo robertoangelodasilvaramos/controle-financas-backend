@@ -2,6 +2,7 @@ package com.sdinfor.controlefinancas.usuario.service;
 
 
 
+import com.sdinfor.controlefinancas.exeption.ErroAutenticationException;
 import com.sdinfor.controlefinancas.exeption.RegraNegocioExcepition;
 import com.sdinfor.controlefinancas.usuario.model.entity.Usuario;
 import com.sdinfor.controlefinancas.usuario.repository.UsuarioRepository;
@@ -35,7 +36,23 @@ public class UsuarioServiceTest {
         service = new UsuarioServiceImpl(repository);
     }
 
-    @Test(expected = Test.None.class)
+    @Test(expected = ErroAutenticationException.class)
+    public void LancarErroQuandoNaoEncontrarUsuarioCadastradoComOEmailInformado(){
+    Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+    service.autenticar("email@email.com", "senha");
+    }
+
+    @Test
+    public void deveLancarErroQuandoASenhaForIncorreta(){
+        String senha = "senha";
+        Usuario usu = Usuario.builder().nome("usuario").email("email@email.com").senha(senha).id(2L).build();
+        Mockito.when(repository.findByEmail(Mockito.anyString())).thenReturn(Optional.of(usu));
+
+
+       Assertions.assertThat(service.autenticar("email@email.com", "senha")).overridingErrorMessage("Senha invalidos!");
+    }
+
+    @Test()
     public void deveAutenticarUmUsuarioComSucesso(){
         String email = "email@email.com";
         String senha = "senha";
