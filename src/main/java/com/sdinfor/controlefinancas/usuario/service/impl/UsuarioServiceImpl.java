@@ -26,7 +26,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new ErroAutenticationException("Usuário não Encontrado para o E-mail informado!");
         }
         //testa senha
-        else if (usuario.get().getSenha().equals(email)){
+        if (!usuario.get().getSenha().equals(senha) || usuario.get().getSenha().isEmpty()){
             throw new ErroAutenticationException("Senha invalidos!");
         }
         //retorna usuario logado
